@@ -1,0 +1,55 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Client Response</title>  
+    <style>  
+        /* 在这里添加您的CSS代码来实现进度条 */  
+        .progress-bar {  
+            width: 100%;  
+            background-color: #f3f3f3;  
+            border: 1px solid #ccc;  
+            margin-top: 20px;  
+        }  
+        .progress-fill {  
+            width: 0%;  
+            height: 30px;  
+            background-color: #4caf50;  
+            text-align: center;  
+            line-height: 30px;  
+            color: white;  
+        }  
+    </style>  
+</head>  
+<body>  
+    <h1>Client Response</h1>  
+    <div class="progress-bar">  
+        <div class="progress-fill" id="progress-fill">0%</div>  
+    </div>  
+    <div id="urls-container"></div>  
+  
+    <script>  
+        // 在这里添加您的JavaScript代码来处理从服务器返回的URL并打开它们  
+        // 例如，使用fetch API来获取数据，然后更新页面内容  
+        document.addEventListener('DOMContentLoaded', function() {  
+            fetch('/index.php') // 假设index.php在同一目录下，并且服务器配置允许从客户端访问它  
+                .then(response => response.json())  
+                .then(data => {  
+                    // 假设data.urls包含从服务器返回的URL列表  
+                    // 您可以在这里更新页面内容，例如显示URL列表或打开URL  
+                    const urlsContainer = document.getElementById('urls-container');  
+                    urlsContainer.innerHTML = data.urls.map(url => `<a href="${url}" target="_blank">${url}</a><br>`).join('');  
+  
+                    // 更新进度条（这里只是一个示例，实际上您可能需要根据实际情况来计算进度）  
+                    const progressFill = document.getElementById('progress-fill');  
+                    progressFill.style.width = '100%'; // 假设数据加载完成，进度为100%  
+                    progressFill.textContent = '100%';  
+                })  
+                .catch(error => {  
+                    console.error('Error fetching data:', error);  
+                });  
+        });  
+    </script>  
+</body>  
+</html>
